@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { addTodo, deleteTodo } from "./features/todo/todoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { use } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    dispatch(addTodo(input));
+    setInput("");
+  };
+
+  const todos = useSelector((state) => state.todos.todos);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 flex items-center justify-center">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          To-Do App
+        </h1>
+        <form onSubmit={handleAdd} className="flex gap-2 mb-4">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Add a new task"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition-transform transform hover:scale-105"
+          >
+            Add
+          </button>
+        </form>
+        <ul className="space-y-3">
+          {todos.map((todo) => {
+            return (
+              <li
+                key={todo.id}
+                className="flex justify-between items-center bg-gray-50 px-4 py-2 rounded-md shadow-sm hover:bg-gray-100 transition-all"
+              >
+                <span className="text-gray-700">{todo.task}</span>
+                <button className="text-red-500 hover:text-red-600 focus:outline-none">
+                  Delete
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
