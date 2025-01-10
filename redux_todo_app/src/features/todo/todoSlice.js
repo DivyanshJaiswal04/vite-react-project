@@ -12,14 +12,20 @@ export const todosSlice = createSlice({
       state.todos.push({
         id: nanoid(),
         task: action.payload,
-        completed: false,
       });
     },
     deleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
+    editTodo: (state, action) => {
+      state.todos = state.todos.map((todo) =>
+        todo.id === action.payload.id
+          ? { ...todo, task: action.payload.task }
+          : todo
+      );
+    },
   },
 });
 
-export const { addTodo, deleteTodo } = todosSlice.actions;
+export const { addTodo, editTodo, deleteTodo } = todosSlice.actions;
 export default todosSlice.reducer;
