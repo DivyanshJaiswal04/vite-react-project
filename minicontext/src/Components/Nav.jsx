@@ -3,18 +3,17 @@ import Login from "./Login";
 import CounterContext from "../Context/CounterContext";
 
 const Nav = () => {
-  const { setNo } = useContext(CounterContext);
-  const { no } = useContext(CounterContext);
+  const { setNo, no } = useContext(CounterContext);
 
   return (
     <div>
-      nav
+      <h2>Nav</h2>
       <button
         onClick={() => {
           setNo(no + 1);
         }}
       >
-        click me
+        Click Me
       </button>
       <Login />
     </div>

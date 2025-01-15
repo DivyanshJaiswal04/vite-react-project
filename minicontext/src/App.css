@@ -4,6 +4,17 @@
   padding: 2rem;
   text-align: center;
 }
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 .logo {
   height: 6em;
